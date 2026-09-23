@@ -1,0 +1,14 @@
+#Compiled programs
+*.exe
+*.out
+
+#Build folders
+build/
+bin/
+
+#VS Code settings
+.vscode/
+
+#Temporary files
+*.tmp
+*.log
