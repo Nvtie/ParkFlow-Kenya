@@ -12,7 +12,7 @@ class ParkingSlot{
         ParkingSlot(int number);// this is a constructor. Its job is to initialize a new parking-slot object with a specific slot number.
 
         void occupy();
-        void vacate();
+        void release();
 
         bool isOccupied();
         int getSlotNumber();

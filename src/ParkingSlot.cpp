@@ -3,19 +3,20 @@
 ParkingSlot::ParkingSlot(int number){//:: operator means that this function belongs to Parking slot class.
 
     slotNumber = number;
-    occupied =false;
+    this->occupied = false;
 }
 
 void ParkingSlot::occupy(){
-    occupied = true;
+    this->occupied = true;
 
 }
 
 void ParkingSlot::release(){
-    occupied = false;
+    this->occupied = false;
 }
+
 bool ParkingSlot::isOccupied(){
-    return occupied;
+    return this->occupied;
 }
 
 int ParkingSlot::getSlotNumber(){

@@ -30,15 +30,11 @@ int main(){
     cout<<"Occupied: "
     <<slot1.isOccupied()<<endl;
 
-    //Release the parking slot
+    //release the parking slot
     slot1.release();
-
-    cout<<endl;
     cout<<"After vehicle leaves:"<<endl;
-
     cout<<"Occupied: "
     <<slot1.isOccupied()<<endl;
-
 
     return 0;
 }
