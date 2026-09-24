@@ -11,7 +11,7 @@ void ParkingSlot::occupy(){
 
 }
 
-void ParkingSlot::vacate(){
+void ParkingSlot::release(){
     occupied = false;
 }
 bool ParkingSlot::isOccupied(){
