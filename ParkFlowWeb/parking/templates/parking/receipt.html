@@ -1,0 +1,157 @@
+{% extends 'parking/base.html' %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    {% if payment %}
+
+    <div class="card shadow-sm">
+
+        <div class="card-body p-5">
+
+            <div class="text-center mb-4">
+                <h1>ParkFlow Kenya</h1>
+                <h4>Parking Payment Receipt</h4>
+                <p class="text-muted">
+                    Payment confirmed
+                </p>
+            </div>
+
+            <hr>
+
+            <div class="row mb-3">
+                <div class="col-6">
+                    <strong>Receipt Number</strong>
+                </div>
+
+                <div class="col-6">
+                    {{ payment.receipt_number }}
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-6">
+                    <strong>Vehicle Registration</strong>
+                </div>
+
+                <div class="col-6">
+                    {{ payment.session.vehicle.registration_number }}
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-6">
+                    <strong>Vehicle Type</strong>
+                </div>
+
+                <div class="col-6">
+                    {{ payment.session.vehicle.vehicle_type }}
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-6">
+                    <strong>Parking Slot</strong>
+                </div>
+
+                <div class="col-6">
+                    Slot {{ payment.session.slot.slot_number }}
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-6">
+                    <strong>Entry Time</strong>
+                </div>
+
+                <div class="col-6">
+                    {{ payment.session.entry_time|date:"d M Y H:i" }}
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-6">
+                    <strong>Exit Time</strong>
+                </div>
+
+                <div class="col-6">
+                    {{ payment.session.exit_time|date:"d M Y H:i" }}
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-6">
+                    <strong>Duration</strong>
+                </div>
+
+                <div class="col-6">
+                    {{ payment.session.duration_minutes }} minutes
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-6">
+                    <strong>Payment Method</strong>
+                </div>
+
+                <div class="col-6">
+                    {{ payment.get_payment_method_display }}
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-6">
+                    <strong>Transaction Reference</strong>
+                </div>
+
+                <div class="col-6">
+                    {{ payment.transaction_reference }}
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="row mb-3">
+                <div class="col-6">
+                    <h4>Total Paid</h4>
+                </div>
+
+                <div class="col-6">
+                    <h4>KSh {{ payment.amount }}</h4>
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+
+                <button
+                    onclick="window.print()"
+                    class="btn btn-primary"
+                >
+                    Print Receipt
+                </button>
+
+                <a
+                    href="{% url 'dashboard' %}"
+                    class="btn btn-secondary"
+                >
+                    Back to Dashboard
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% else %}
+
+    <div class="alert alert-danger">
+        Receipt not found.
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

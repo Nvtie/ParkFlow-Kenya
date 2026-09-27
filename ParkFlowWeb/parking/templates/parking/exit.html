@@ -1,0 +1,193 @@
+{% extends 'parking/base.html' %}
+
+{% block title %}
+Vehicle Exit
+{% endblock %}
+
+{% block content %}
+
+<div style="
+    max-width: 600px;
+    margin: 40px auto;
+">
+
+    <div class="card" style="
+        background: white;
+        padding: 35px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    ">
+
+        <h1>🚪 Vehicle Exit</h1>
+
+        <p>
+            Process vehicle exit and payment.
+        </p>
+
+
+        {% if error %}
+
+            <div style="
+                background: #fee2e2;
+                color: #991b1b;
+                padding: 12px;
+                border-radius: 6px;
+                margin: 20px 0;
+            ">
+
+                {{ error }}
+
+            </div>
+
+        {% endif %}
+
+
+        {% if not result %}
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <label>
+                    Registration Number
+                </label>
+
+                <input
+                    type="text"
+                    name="registration_number"
+                    placeholder="e.g. KDA 443A"
+                    required
+                    style="
+                        width: 100%;
+                        padding: 12px;
+                        margin-top: 8px;
+                    "
+                >
+
+
+                <label style="
+                    display: block;
+                    margin-top: 20px;
+                ">
+                    Payment Method
+                </label>
+
+                <select
+                    name="payment_method"
+                    required
+                    style="
+                        width: 100%;
+                        padding: 12px;
+                        margin-top: 8px;
+                    "
+                >
+
+                    <option value="">
+                        Select payment method
+                    </option>
+
+                    <option value="MPESA">
+                        M-Pesa
+                    </option>
+
+                    <option value="CARD">
+                        Card
+                    </option>
+
+                    <option value="CASH">
+                        Cash
+                    </option>
+
+                </select>
+
+
+                <button
+                    type="submit"
+                    class="btn"
+                    style="
+                        width: 100%;
+                        margin-top: 25px;
+                    "
+                >
+                    Calculate Fee & Pay
+                </button>
+
+            </form>
+
+        {% endif %}
+
+
+        {% if result %}
+
+            <div style="
+                margin-top: 25px;
+                padding: 25px;
+                background: #ecfdf5;
+                border-radius: 10px;
+            ">
+
+                <h2>
+                    Payment Successful ✅
+                </h2>
+
+                <p>
+                    Vehicle:
+                    <strong>
+                        {{ result.vehicle.registration_number }}
+                    </strong>
+                </p>
+
+                <p>
+                    Parking Duration:
+                    <strong>
+                        {{ result.duration }} minutes
+                    </strong>
+                </p>
+
+                <p>
+                    Payment Method:
+                    <strong>
+                        {{ result.payment_method }}
+                    </strong>
+                </p>
+
+                <hr>
+
+                <p>
+                    Amount Paid
+                </p>
+
+                <div style="
+                    font-size: 32px;
+                    font-weight: bold;
+                ">
+                    KSh {{ result.amount }}
+                </div>
+
+                <br>
+
+                <p>
+                    🚧 Barrier: <strong>OPEN</strong>
+                </p>
+
+                <p>
+                    🅿️ Slot {{ result.session.slot.slot_number }}
+                    is now <strong>AVAILABLE</strong>.
+                </p>
+
+                <a
+                    href="{% url 'dashboard' %}"
+                    class="btn"
+                >
+                    Back to Dashboard
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,225 @@
+{% extends 'parking/base.html' %}
+
+{% block content %}
+
+<div class="container-fluid py-4">
+
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="fw-bold">ParkFlow Kenya</h1>
+            <p class="text-muted mb-0">
+                Smart Parking Management Dashboard
+            </p>
+        </div>
+
+        <div>
+            <a href="{% url 'vehicle_entry' %}"
+               class="btn btn-primary me-2">
+                🚗 Vehicle Entry
+            </a>
+
+            <a href="{% url 'vehicle_exit' %}"
+               class="btn btn-dark">
+                🚪 Vehicle Exit
+            </a>
+        </div>
+    </div>
+
+
+    <!-- Statistics -->
+    <div class="row g-4 mb-4">
+
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <p class="text-muted mb-1">Total Slots</p>
+                    <h2 class="fw-bold">
+                        {{ total_slots }}
+                    </h2>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <p class="text-muted mb-1">Available Slots</p>
+                    <h2 class="fw-bold text-success">
+                        {{ available_slots }}
+                    </h2>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <p class="text-muted mb-1">Occupied Slots</p>
+                    <h2 class="fw-bold text-danger">
+                        {{ occupied_slots }}
+                    </h2>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <p class="text-muted mb-1">Active Vehicles</p>
+                    <h2 class="fw-bold">
+                        {{ active_sessions }}
+                    </h2>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- Quick Actions -->
+    <div class="card shadow-sm border-0 mb-4">
+
+        <div class="card-body">
+
+            <h4 class="fw-bold mb-3">
+                Quick Actions
+            </h4>
+
+            <div class="row g-3">
+
+                <div class="col-md-3">
+                    <a href="{% url 'vehicle_entry' %}"
+                       class="btn btn-outline-primary w-100 py-3">
+                        🚗 Register Vehicle
+                    </a>
+                </div>
+
+                <div class="col-md-3">
+                    <a href="{% url 'vehicle_exit' %}"
+                       class="btn btn-outline-dark w-100 py-3">
+                        🚪 Process Exit
+                    </a>
+                </div>
+
+                <div class="col-md-3">
+                    <a href="{% url 'display' %}"
+                       class="btn btn-outline-success w-100 py-3">
+                        🖥 Live Display
+                    </a>
+                </div>
+
+                <div class="col-md-3">
+                    <a href="{% url 'reports' %}"
+                       class="btn btn-outline-secondary w-100 py-3">
+                        📊 Reports
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Active Parking -->
+    <div class="card shadow-sm border-0">
+
+        <div class="card-body">
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+
+                <h4 class="fw-bold mb-0">
+                    Active Parking Sessions
+                </h4>
+
+                <span class="badge bg-success">
+                    LIVE
+                </span>
+
+            </div>
+
+
+            {% if active_parking %}
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle">
+
+                    <thead class="table-light">
+
+                        <tr>
+                            <th>Vehicle</th>
+                            <th>Type</th>
+                            <th>Slot</th>
+                            <th>Entry Time</th>
+                            <th>Status</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        {% for session in active_parking %}
+
+                        <tr>
+
+                            <td class="fw-bold">
+                                {{ session.vehicle.registration_number }}
+                            </td>
+
+                            <td>
+                                {{ session.vehicle.vehicle_type }}
+                            </td>
+
+                            <td>
+                                <span class="badge bg-danger">
+                                    Slot {{ session.slot.slot_number }}
+                                </span>
+                            </td>
+
+                            <td>
+                                {{ session.entry_time|date:"d M Y, H:i" }}
+                            </td>
+
+                            <td>
+                                <span class="badge bg-warning text-dark">
+                                    PARKED
+                                </span>
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            {% else %}
+
+            <div class="text-center py-5">
+
+                <h5>No vehicles currently parked</h5>
+
+                <p class="text-muted">
+                    All parking sessions are currently clear.
+                </p>
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

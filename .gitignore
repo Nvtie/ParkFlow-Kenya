@@ -1,14 +1,48 @@
-#Compiled programs
+# ==============================
+# C++ compiled programs
+# ==============================
 *.exe
 *.out
 
-#Build folders
+# C++ build folders
 build/
 bin/
 
-#VS Code settings
-.vscode/
+# ==============================
+# Python / Django
+# ==============================
+__pycache__/
+*.py[cod]
 
-#Temporary files
+# Django database
+db.sqlite3
+*.sqlite3
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Environment variables
+.env
+
+# Python packaging
+*.egg-info/
+
+# ==============================
+# IDE
+# ==============================
+.vscode/
+.idea/
+
+# ==============================
+# Temporary / log files
+# ==============================
 *.tmp
 *.log
+
+# ==============================
+# OS files
+# ==============================
+.DS_Store
+Thumbs.db

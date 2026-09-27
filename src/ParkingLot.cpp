@@ -54,3 +54,14 @@ void ParkingLot::releaseSlot(int slotNumber){
         }
     }
 }
+
+ParkingSlot* ParkingLot::getSlot(int slotNumber){
+
+    for (ParkingSlot &slot : slots){
+        if (slot.getSlotNumber() == slotNumber){
+            return &slot;
+        }
+    }
+    return nullptr; // Slot not found
+    
+}

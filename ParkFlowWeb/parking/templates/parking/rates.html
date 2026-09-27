@@ -1,0 +1,131 @@
+{% extends 'parking/base.html' %}
+
+{% block content %}
+
+<div class="container-fluid py-4">
+
+    <div class="mb-4">
+        <h1 class="fw-bold">Parking Rates</h1>
+
+        <p class="text-muted">
+            Update parking charges without modifying the software.
+        </p>
+    </div>
+
+
+    <div class="row g-4">
+
+        {% for rate in rates %}
+
+        <div class="col-md-6 col-lg-4">
+
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="card-body">
+
+                    <h5 class="fw-bold mb-3">
+                        Rate {{ forloop.counter }}
+                    </h5>
+
+
+                    <form method="POST">
+
+                        {% csrf_token %}
+
+                        <input
+                            type="hidden"
+                            name="rate_id"
+                            value="{{ rate.id }}"
+                        >
+
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Minimum Minutes
+                            </label>
+
+                            <input
+                                type="number"
+                                name="minimum_minutes"
+                                class="form-control"
+                                value="{{ rate.minimum_minutes }}"
+                                min="0"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Maximum Minutes
+                            </label>
+
+                            <input
+                                type="number"
+                                name="maximum_minutes"
+                                class="form-control"
+                                value="{{ rate.maximum_minutes|default_if_none:'' }}"
+                                min="0"
+                            >
+
+                            <small class="text-muted">
+                                Leave blank for no maximum.
+                            </small>
+
+                        </div>
+
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Amount (KSh)
+                            </label>
+
+                            <input
+                                type="number"
+                                name="amount"
+                                class="form-control"
+                                value="{{ rate.amount }}"
+                                min="0"
+                                step="0.01"
+                                required
+                            >
+
+                        </div>
+
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary w-100"
+                        >
+                            Save Rate
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% empty %}
+
+        <div class="col-12">
+
+            <div class="alert alert-warning">
+                No parking rates have been configured.
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}

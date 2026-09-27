@@ -1,0 +1,113 @@
+{% extends 'parking/base.html' %}
+
+{% block content %}
+
+<div class="container-fluid py-4">
+
+    <div class="mb-4">
+        <h1 class="fw-bold">Audit Log</h1>
+
+        <p class="text-muted">
+            Complete record of confirmed parking transactions.
+        </p>
+    </div>
+
+
+    <div class="card shadow-sm border-0">
+
+        <div class="card-body">
+
+            {% if audit_records %}
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle">
+
+                    <thead class="table-light">
+
+                        <tr>
+                            <th>Action</th>
+                            <th>Vehicle</th>
+                            <th>Amount</th>
+                            <th>Payment Method</th>
+                            <th>Receipt</th>
+                            <th>User</th>
+                            <th>Timestamp</th>
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for record in audit_records %}
+
+                        <tr>
+
+                            <td>
+                                <span class="badge bg-success">
+                                    {{ record.action }}
+                                </span>
+                            </td>
+
+
+                            <td class="fw-bold">
+                                {{ record.payment.session.vehicle.registration_number }}
+                            </td>
+
+
+                            <td>
+                                KSh {{ record.amount }}
+                            </td>
+
+
+                            <td>
+                                {{ record.payment.payment_method }}
+                            </td>
+
+
+                            <td>
+                                {{ record.payment.receipt_number }}
+                            </td>
+
+
+                            <td>
+                                {{ record.user|default:"System" }}
+                            </td>
+
+
+                            <td>
+                                {{ record.timestamp|date:"d M Y, H:i:s" }}
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            {% else %}
+
+            <div class="text-center py-5">
+
+                <h5>No audit records yet</h5>
+
+                <p class="text-muted">
+                    Confirmed payments will appear here automatically.
+                </p>
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,124 @@
+{% extends 'parking/base.html' %}
+
+{% block title %}
+Vehicle Entry
+{% endblock %}
+
+{% block content %}
+
+<div style="
+    max-width: 550px;
+    margin: 40px auto;
+">
+
+    <div class="card" style="
+        background: white;
+        padding: 35px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    ">
+
+        <h1>🚗 Vehicle Entry</h1>
+
+        <p>
+            Register a vehicle entering the parking facility.
+        </p>
+
+        {% if error %}
+
+            <div style="
+                background: #fee2e2;
+                color: #991b1b;
+                padding: 12px;
+                border-radius: 6px;
+                margin: 20px 0;
+            ">
+                {{ error }}
+            </div>
+
+        {% endif %}
+
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <label>
+                Registration Number
+            </label>
+
+            <input
+                type="text"
+                name="registration_number"
+                placeholder="e.g. KDA 443A"
+                required
+                style="
+                    width: 100%;
+                    padding: 12px;
+                    margin-top: 8px;
+                "
+            >
+
+
+            <label style="
+                display: block;
+                margin-top: 20px;
+            ">
+                Vehicle Type
+            </label>
+
+            <select
+                name="vehicle_type"
+                required
+                style="
+                    width: 100%;
+                    padding: 12px;
+                    margin-top: 8px;
+                "
+            >
+
+                <option value="">
+                    Select vehicle type
+                </option>
+
+                <option value="Car">
+                    Car
+                </option>
+
+                <option value="SUV">
+                    SUV
+                </option>
+
+                <option value="Van">
+                    Van
+                </option>
+
+                <option value="Truck">
+                    Truck
+                </option>
+
+                <option value="Motorcycle">
+                    Motorcycle
+                </option>
+
+            </select>
+
+
+            <button
+                type="submit"
+                class="btn"
+                style="
+                    width: 100%;
+                    margin-top: 25px;
+                "
+            >
+                Register Vehicle
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

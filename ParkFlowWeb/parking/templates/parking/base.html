@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}ParkFlow Kenya{% endblock %}</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            color: #1f2937;
+        }
+
+        nav {
+            background: #111827;
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            color: white;
+            font-size: 22px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 10px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 9px 14px;
+            border-radius: 6px;
+        }
+
+        .nav-links a:hover {
+            background: #374151;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .page-title {
+            margin-bottom: 25px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 11px 18px;
+            border-radius: 7px;
+            text-decoration: none;
+            background: #111827;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #374151;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #64748b;
+        }
+    </style>
+
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body>
+
+<nav>
+
+    <a href="{% url 'dashboard' %}" class="logo">
+        🚗 ParkFlow Kenya
+    </a>
+
+    <div class="nav-links">
+
+        {% if user.is_authenticated %}
+
+        <a href="{% url 'dashboard' %}">Dashboard</a>
+
+        <a href="{% url 'vehicle_entry' %}">Vehicle Entry</a>
+
+        <a href="{% url 'vehicle_exit' %}">Vehicle Exit</a>
+
+        <a href="{% url 'reports' %}">Reports</a>
+
+        <a href="{% url 'manage_rates' %}">Rates</a>
+
+        <a href="{% url 'logout' %}">Logout</a>
+
+        {% else %}
+
+        <a href="{% url 'login' %}">Login</a>
+
+        {% endif %}
+
+        <a href="{% url 'display' %}">Live Display</a>
+        <a href="{% url 'audit_log' %}">Audit Log</a>
+
+    </div>
+
+</nav>
+
+<div class="container">
+
+    {% block content %}
+    {% endblock %}
+
+</div>
+
+<footer>
+    ParkFlow Kenya © 2026
+</footer>
+
+</body>
+</html>

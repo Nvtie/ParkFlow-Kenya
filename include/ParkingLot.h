@@ -18,6 +18,8 @@ class ParkingLot{
     void occupySlot(int slotNumber);
     void releaseSlot(int slotNumber);
 
+    ParkingSlot* getSlot(int slotNumber); //this function returns a pointer to the parking slot with the specified slot number. it allows other classes or functions to access and manipulate specific parking slots in the parking lot.
+
         
 };
 #endif 

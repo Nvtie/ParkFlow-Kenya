@@ -1,0 +1,260 @@
+{% extends 'parking/base.html' %}
+
+{% block content %}
+
+<div class="container-fluid py-4">
+
+    <div class="mb-4">
+        <h1 class="fw-bold">Management Reports</h1>
+        <p class="text-muted">
+            Parking revenue, transactions and payment reconciliation
+        </p>
+    </div>
+
+
+    <!-- Revenue Summary -->
+
+    <div class="row g-4 mb-4">
+
+        <div class="col-md-4">
+
+            <div class="card shadow-sm border-0">
+
+                <div class="card-body">
+
+                    <p class="text-muted mb-1">
+                        Total Revenue
+                    </p>
+
+                    <h2 class="fw-bold">
+                        KSh {{ total_revenue }}
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-4">
+
+            <div class="card shadow-sm border-0">
+
+                <div class="card-body">
+
+                    <p class="text-muted mb-1">
+                        Transactions
+                    </p>
+
+                    <h2 class="fw-bold">
+                        {{ total_transactions }}
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-4">
+
+            <div class="card shadow-sm border-0">
+
+                <div class="card-body">
+
+                    <p class="text-muted mb-1">
+                        Completed Sessions
+                    </p>
+
+                    <h2 class="fw-bold">
+                        {{ completed_sessions }}
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Payment Methods -->
+
+    <div class="row g-4 mb-4">
+
+        <div class="col-md-4">
+
+            <div class="card shadow-sm border-0">
+
+                <div class="card-body">
+
+                    <h5 class="fw-bold">
+                        M-Pesa Revenue
+                    </h5>
+
+                    <h3>
+                        KSh {{ mpesa_revenue }}
+                    </h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-4">
+
+            <div class="card shadow-sm border-0">
+
+                <div class="card-body">
+
+                    <h5 class="fw-bold">
+                        Card Revenue
+                    </h5>
+
+                    <h3>
+                        KSh {{ card_revenue }}
+                    </h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-4">
+
+            <div class="card shadow-sm border-0">
+
+                <div class="card-body">
+
+                    <h5 class="fw-bold">
+                        Cash Revenue
+                    </h5>
+
+                    <h3>
+                        KSh {{ cash_revenue }}
+                    </h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Transaction Table -->
+
+    <div class="card shadow-sm border-0">
+
+        <div class="card-body">
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+
+                <div>
+                    <h4 class="fw-bold mb-0">
+                        Recent Transactions
+                    </h4>
+
+                    <small class="text-muted">
+                        Confirmed payments only
+                    </small>
+                </div>
+
+            </div>
+
+
+            {% if recent_payments %}
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle">
+
+                    <thead class="table-light">
+
+                        <tr>
+                            <th>Receipt</th>
+                            <th>Vehicle</th>
+                            <th>Slot</th>
+                            <th>Method</th>
+                            <th>Amount</th>
+                            <th>Transaction Ref</th>
+                            <th>Date</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        {% for payment in recent_payments %}
+
+                        <tr>
+
+                            <td class="fw-bold">
+                                {{ payment.receipt_number }}
+                            </td>
+
+                            <td>
+                                {{ payment.session.vehicle.registration_number }}
+                            </td>
+
+                            <td>
+                                Slot {{ payment.session.slot.slot_number }}
+                            </td>
+
+                            <td>
+                                <span class="badge bg-secondary">
+                                    {{ payment.payment_method }}
+                                </span>
+                            </td>
+
+                            <td class="fw-bold">
+                                KSh {{ payment.amount }}
+                            </td>
+
+                            <td>
+                                {{ payment.transaction_reference }}
+                            </td>
+
+                            <td>
+                                {{ payment.payment_time|date:"d M Y, H:i" }}
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            {% else %}
+
+            <div class="text-center py-5">
+
+                <h5>No confirmed transactions</h5>
+
+                <p class="text-muted">
+                    Payment records will appear here after vehicles exit.
+                </p>
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
